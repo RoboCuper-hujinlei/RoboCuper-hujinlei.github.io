@@ -1,8 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search>
-  <entry>
-    <title>&#39;first&#39;</title>
-    <url>/2020/05/04/first/</url>
-    <content><![CDATA[<h1 id="welcome-this-is-my-first-blog"><a href="#welcome-this-is-my-first-blog" class="headerlink" title="welcome ! this is my first blog"></a>welcome ! this is my first blog</h1>]]></content>
-  </entry>
+<search> 
+  
+  
+    
+    <entry>
+      <title>&#39;时间序列教程之Prophet&#39;</title>
+      <link href="/2020/05/04/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E6%95%99%E7%A8%8B%E4%B9%8BProphet/"/>
+      <url>/2020/05/04/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E6%95%99%E7%A8%8B%E4%B9%8BProphet/</url>
+      
+        <content type="html"><![CDATA[<p>hi~ 这里是时间序列预测模型(二) 之 Prophet</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 时间序列预测，Prophet </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>&#39;first&#39;</title>
+      <link href="/2020/05/04/first/"/>
+      <url>/2020/05/04/first/</url>
+      
+        <content type="html"><![CDATA[<h1 id="welcome-this-is-my-first-blog"><a href="#welcome-this-is-my-first-blog" class="headerlink" title="welcome ! this is my first blog"></a>welcome ! this is my first blog</h1>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+  
+  
 </search>
