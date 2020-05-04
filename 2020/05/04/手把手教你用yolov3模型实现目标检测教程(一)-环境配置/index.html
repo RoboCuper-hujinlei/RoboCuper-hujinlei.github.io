@@ -13,7 +13,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    pandas将多列带时间戳的Series合并为单个DataFrame |  Jinlei&#39;s Blog
+    手把手教你用yolov3模型实现目标检测教程(一) - 环境配置 |  Jinlei&#39;s Blog
   </title>
   <meta name="generator" content="hexo-theme-ayer">
   
@@ -46,7 +46,7 @@
   <div id="app">
     <main class="content on">
       <section class="outer">
-  <article id="post-pandas将多列带时间戳的Series合并为单个DataFrame" class="article article-type-post" itemscope
+  <article id="post-手把手教你用yolov3模型实现目标检测教程(一)-环境配置" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -54,7 +54,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  pandas将多列带时间戳的Series合并为单个DataFrame
+  手把手教你用yolov3模型实现目标检测教程(一) - 环境配置
 </h1>
  
 
@@ -63,8 +63,8 @@
 
     
     <div class="article-meta">
-      <a href="/2020/05/04/pandas%E5%B0%86%E5%A4%9A%E5%88%97%E5%B8%A6%E6%97%B6%E9%97%B4%E6%88%B3%E7%9A%84Series%E5%90%88%E5%B9%B6%E4%B8%BA%E5%8D%95%E4%B8%AADataFrame/" class="article-date">
-  <time datetime="2020-05-04T10:31:19.000Z" itemprop="datePublished">2020-05-04</time>
+      <a href="/2020/05/04/%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E7%94%A8yolov3%E6%A8%A1%E5%9E%8B%E5%AE%9E%E7%8E%B0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%95%99%E7%A8%8B(%E4%B8%80)-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time datetime="2020-05-04T10:35:38.000Z" itemprop="datePublished">2020-05-04</time>
 </a>
       
       
@@ -74,7 +74,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">565</span>
+            <span class="post-count">1.2k</span>
         </span>
     </span>
 
@@ -83,7 +83,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">3 min</span>
+            <span class="post-count">4 min</span>
         </span>
     </span>
 </div>
@@ -94,6 +94,8 @@
 
     
     
+    <div class="tocbot"></div>
+
 
 
 
@@ -106,22 +108,35 @@
       
 
       
-      <p>﻿<strong>背景：</strong><br>遇到这样的需求:<br>将多列这样以时间戳为index的Series数据拼接为整体的DataFrame（只带有一列index）<br>数据举例：<br>(1) 温度数据</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">2020-03-20 00:00:00    10.911639</span><br><span class="line">2020-03-20 00:30:00    10.561648</span><br><span class="line">2020-03-20 01:00:00    10.410831</span><br><span class="line">2020-03-20 01:30:00     9.993831</span><br><span class="line">2020-03-20 02:00:00     9.996133</span><br><span class="line">2020-03-20 02:30:00     9.807382</span><br><span class="line">2020-03-20 03:00:00     9.831737</span><br><span class="line">2020-03-20 03:30:00     9.767458</span><br><span class="line">2020-03-20 04:00:00     9.789868</span><br><span class="line">2020-03-20 04:30:00     9.993025</span><br><span class="line">2020-03-20 05:00:00    10.203707</span><br><span class="line">2020-03-20 05:30:00    10.460783</span><br><span class="line">2020-03-20 06:00:00    10.900585</span><br><span class="line">2020-03-20 06:30:00    11.154725</span><br><span class="line">2020-03-20 07:00:00    11.765203</span><br><span class="line">2020-03-20 07:30:00    12.377077</span><br><span class="line">2020-03-20 08:00:00    13.013389</span><br><span class="line">2020-03-20 08:30:00    13.685595</span><br><span class="line">2020-03-20 09:00:00    14.327092</span><br><span class="line">2020-03-20 09:30:00    14.862767</span><br><span class="line">2020-03-20 10:00:00    15.264174</span><br></pre></td></tr></table></figure>
+      <p>﻿## 手把手教你用yolov3模型实现目标检测(一)</p>
+<p>写在前面：<br>由于项目需要，使用yolov3模型做了各种现实场景物体的目标检测。做完了过了好长时间，感觉有些遗忘，还是该留下点东西，方便自己查找，也希望能惠及他人。<br>同时，为了督促自己补充理论体系，尽量做到知其然知其所以然</p>
+<h3 id="1、环境配置"><a href="#1、环境配置" class="headerlink" title="1、环境配置"></a>1、环境配置</h3><p>首先，本教程是完全在ubuntu 18.04下进行的，你能找到的成熟框架不外乎以下三个：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;github.com&#x2F;qqwweee&#x2F;keras-yolo3 ，基于keras编写</span><br><span class="line"></span><br><span class="line">https:&#x2F;&#x2F;github.com&#x2F;pjreddie&#x2F;darknet ，基于c++编写</span><br><span class="line"></span><br><span class="line">https:&#x2F;&#x2F;github.com&#x2F;AlexeyAB&#x2F;darknet ， 基于c++编写</span><br></pre></td></tr></table></figure>
 
-<p>(2) 湿度数据</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">2020-03-20 00:00:00    30.071777</span><br><span class="line">2020-03-20 00:30:00    31.718174</span><br><span class="line">2020-03-20 01:00:00    32.415719</span><br><span class="line">2020-03-20 01:30:00    33.542252</span><br><span class="line">2020-03-20 02:00:00    33.725316</span><br><span class="line">2020-03-20 02:30:00    34.507023</span><br><span class="line">2020-03-20 03:00:00    34.402693</span><br><span class="line">2020-03-20 03:30:00    35.050728</span><br><span class="line">2020-03-20 04:00:00    35.082839</span><br><span class="line">2020-03-20 04:30:00    34.889389</span><br><span class="line">2020-03-20 05:00:00    34.481423</span><br><span class="line">2020-03-20 05:30:00    33.377774</span><br><span class="line">2020-03-20 06:00:00    31.306436</span><br><span class="line">2020-03-20 06:30:00    30.868772</span><br><span class="line">2020-03-20 07:00:00    29.368311</span><br><span class="line">2020-03-20 07:30:00    27.515762</span><br><span class="line">2020-03-20 08:00:00    24.488863</span><br><span class="line">2020-03-20 08:30:00    22.346596</span><br><span class="line">2020-03-20 09:00:00    19.126895</span><br><span class="line">2020-03-20 09:30:00    17.111340</span><br><span class="line">2020-03-20 10:00:00    13.799469</span><br></pre></td></tr></table></figure>
+<p>其中，第一个keras-yolo3需要搭建tensorflow-gpu,keras等很多环境。比较麻烦，有时间学习可以用这个。<br><strong>推荐使用</strong>第二个官方框架pjreddie/darknet，官网(教程)如下：<a href="https://pjreddie.com/darknet/yolo/" target="_blank" rel="noopener">https://pjreddie.com/darknet/yolo/</a><br>第三个AlexeyAB/darknet项目近期一直在维护，而且文档特别详细。但个人感觉第二个官方框架实践起来更简单。<br>建议训练和检测过程中有任何问题，先到第二第三个仓库的issues中查找，<strong>也许会找到你想要的</strong>。<br>好，那我们开始：<br>先下载该项目：<a href="https://github.com/pjreddie/darknet" target="_blank" rel="noopener">https://github.com/pjreddie/darknet</a></p>
+<h4 id="CPU-GPU编译："><a href="#CPU-GPU编译：" class="headerlink" title="CPU/GPU编译："></a>CPU/GPU编译：</h4><p>编译过程中，检查环境：<br>我的环境：cmake version 3.10.2; 别的版本应该也可<br>Python 3.6.3 |Anaconda custom (64-bit)| (default, Oct 13 2017, 12:02:49)<br>教程也很清楚哦：<a href="https://pjreddie.com/darknet/install/" target="_blank" rel="noopener">https://pjreddie.com/darknet/install/</a></p>
+<p><strong>注意</strong>：darknet不支持gcc和g++6以上的版本，而ubuntu18.04默认安装的gcc-7<br>因此，需要将gcc和g++分别降级：<br><strong>（1）</strong> gcc/g++降级为4.8版本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">	(1)在Ubuntu 16.04上安装老版gcc十分简单，直接用apt-get命令下载即可.</span><br><span class="line">sudo apt-get install gcc-4.8</span><br><span class="line">（2）安装完成后输入命令gcc --verison查看gcc的版本,此时还是高版本</span><br><span class="line">（3）查看版本gcc-4.8版本是否安装成功</span><br><span class="line">ls &#x2F;usr&#x2F;bin&#x2F;gcc*</span><br><span class="line">（4）输入命令设置默认版本:</span><br><span class="line">sudo update-alternatives --install &#x2F;usr&#x2F;bin&#x2F;gcc gcc &#x2F;usr&#x2F;bin&#x2F;gcc-4.8 100</span><br><span class="line">（5）查看默认结果（非必须）</span><br><span class="line">sudo update-alternatives --config gcc</span><br><span class="line">（6）最终gcc --version 发现变成4.8版本了</span><br><span class="line"></span><br><span class="line">g++的降级，只需把上面gcc改称g++。gcc和g++的版本应该必须一致。</span><br></pre></td></tr></table></figure>
 
-<p>解决的问题就是：保留一列时间戳作index，把剩下多列的Series.values拼接在一起。<br>（1）首先，找一组Series作为第一列,比如温度，先将series转换DataFrame:<br>self.preData[0]表示Series的温度数据，本文在self.preData列表中存放了5组上面说的Series数据。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">frame &#x3D; &#123;&#39;Date Time&#39;: self.preData[0].index, &#39;Temperature&#39;: self.preData[0].values&#125;</span><br><span class="line">frame &#x3D; pd.DataFrame(frame)	# 转换DataFrame</span><br></pre></td></tr></table></figure>
+<p><strong>CPU:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd darknet-master </span><br><span class="line">make</span><br></pre></td></tr></table></figure>
 
-<p>（2）将第一列时间戳作为index</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">frame[&#39;Date Time&#39;] &#x3D; pd.to_datetime(frame[&#39;Date Time&#39;])</span><br><span class="line">frame.set_index(&#39;Date Time&#39;, inplace&#x3D;True)</span><br></pre></td></tr></table></figure>
+<p>就完事了，一般不会有问题。</p>
+<p><strong>GPU:</strong><br>yolov3是十分高效快速的！这点不用过多介绍，虽然CPU版本以及很快，但GPU号称快了500倍！<br>修改根目录下的makefile文件的GPU和CUDNN为1即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GPU&#x3D;1</span><br><span class="line">CUDNN&#x3D;1</span><br><span class="line">OPENCV&#x3D;0</span><br><span class="line">OPENMP&#x3D;0</span><br><span class="line">DEBUG&#x3D;0</span><br></pre></td></tr></table></figure>
 
-<p>（3）按列拼接</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">frame[&#39;Humidity&#39;] &#x3D; self.preData[1].values      # 温度列的DataFrame，与其他列的Series拼接</span><br><span class="line">frame[&#39;Wind&#39;] &#x3D; self.preData[2].values</span><br><span class="line">frame[&#39;WindSpeed&#39;] &#x3D; self.preData[3].values</span><br><span class="line">frame[&#39;itPower&#39;] &#x3D; self.preData[4].values</span><br></pre></td></tr></table></figure>
+<p>改完然后同样的，根目录 -&gt; make就ok了<br>我的环境：<br>ubuntu18.04+CUDA9.0+CUDNN7+nvidia1050 4G显存<br>安装教程：（很多链接）<br><a href="https://blog.csdn.net/Hu_helloworld/article/details/102614562" target="_blank" rel="noopener">https://blog.csdn.net/Hu_helloworld/article/details/102614562</a><br>CPU和GPU实测yolov3检测同一张图片，cpu到7、8s,GPU就是0.几s的量级<br>如果对于精确度要求不是特别高，而机器配置低对速度要求更高，建议使用yolov3-tiny版本（轻量，速度也可）</p>
+<h3 id="2、下载与训练模型"><a href="#2、下载与训练模型" class="headerlink" title="2、下载与训练模型"></a>2、下载与训练模型</h3><p>yolov3.weights<br>模型文件包括<strong>.cfg</strong>配置文件和<strong>.weights</strong>权重文件<br>.cfg文件在项目中 /cfg目录<br>下载权重文件：<br><a href="https://pjreddie.com/media/files/yolov3.weights" target="_blank" rel="noopener">https://pjreddie.com/media/files/yolov3.weights</a><br>或者<br><a href="https://pjreddie.com/media/files/yolov3-tiny.weights" target="_blank" rel="noopener">https://pjreddie.com/media/files/yolov3-tiny.weights</a></p>
+<h3 id="3、使用预训练模型测试目标检测"><a href="#3、使用预训练模型测试目标检测" class="headerlink" title="3、使用预训练模型测试目标检测"></a>3、使用预训练模型测试目标检测</h3><p>最简单的检测命令，在根目录下执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;darknet detect cfg&#x2F;yolov3.cfg yolov3.weights data&#x2F;dog.jpg</span><br></pre></td></tr></table></figure>
 
-<p>因为列还算少，可直接指定列名。列太多可能要另想办法，希望对您有帮助~</p>
+<p>另一种命令写法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;darknet detector test cfg&#x2F;coco.data cfg&#x2F;yolov3.cfg yolov3.weights data&#x2F;dog.jpg</span><br></pre></td></tr></table></figure>
+
+<p>您将看到以下输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">layer     filters    size              input                output</span><br><span class="line">    0 conv     32  3 x 3 &#x2F; 1   416 x 416 x   3   -&gt;   416 x 416 x  32  0.299 BFLOPs</span><br><span class="line">    1 conv     64  3 x 3 &#x2F; 2   416 x 416 x  32   -&gt;   208 x 208 x  64  1.595 BFLOPs</span><br><span class="line">    .......</span><br><span class="line">  105 conv    255  1 x 1 &#x2F; 1    52 x  52 x 256   -&gt;    52 x  52 x 255  0.353 BFLOPs</span><br><span class="line">  106 detection</span><br><span class="line">truth_thresh: Using default &#39;1.000000&#39;</span><br><span class="line">Loading weights from yolov3.weights...Done!</span><br><span class="line">data&#x2F;dog.jpg: Predicted in 0.029329 seconds.</span><br><span class="line">dog: 99%</span><br><span class="line">truck: 93%</span><br><span class="line">bicycle: 99%</span><br></pre></td></tr></table></figure>
+
+<p>其中data文件夹中提供了一些示例图像，以备不时之需。尝试data/eagle.jpg，data/dog.jpg，data/person.jpg，或data/horses.jpg！<br>以下是我训练tiny模型的检测结果<br><img src="https://img-blog.csdnimg.cn/20191128200545339.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0h1X2hlbGxvd29ybGQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>到此位置我们可以使用官方提供的预训练模型进行目标检测，后面想在我们自己的场景下使用还需要自己训练样本，调整参数，调用自己的模型进行检测。<br>下篇介绍，标注自己的PASCAL VOC图片数据集，训练自己的yolov3-tiny模型。</p>
 
       
       <!-- reward -->
@@ -190,14 +205,14 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/05/04/pandas%E5%B0%86%E5%A4%9A%E5%88%97%E5%B8%A6%E6%97%B6%E9%97%B4%E6%88%B3%E7%9A%84Series%E5%90%88%E5%B9%B6%E4%B8%BA%E5%8D%95%E4%B8%AADataFrame/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/05/04/%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E7%94%A8yolov3%E6%A8%A1%E5%9E%8B%E5%AE%9E%E7%8E%B0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%95%99%E7%A8%8B(%E4%B8%80)-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/yolov3%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/" rel="tag">yolov3目标检测</a></li></ul>
 
 
     </footer>
@@ -208,19 +223,19 @@
   
   <nav class="article-nav">
     
-      <a href="/2020/05/04/%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E7%94%A8yolov3%E6%A8%A1%E5%9E%8B%E5%AE%9E%E7%8E%B0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%95%99%E7%A8%8B(%E4%B8%80)-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="article-nav-link">
+      <a href="/2020/05/04/%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E7%94%A8yolov3%E6%A8%A1%E5%9E%8B%E5%AE%9E%E7%8E%B0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%95%99%E7%A8%8B(%E4%BA%8C)-%E6%A0%B7%E6%9C%AC%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            手把手教你用yolov3模型实现目标检测教程(一) - 环境配置
+            手把手教你用yolov3模型实现目标检测教程(二)-样本数据获取
           
         </div>
       </a>
     
     
-      <a href="/2020/05/04/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E6%95%99%E7%A8%8B%E4%B9%8Barima/" class="article-nav-link">
+      <a href="/2020/05/04/pandas%E5%B0%86%E5%A4%9A%E5%88%97%E5%B8%A6%E6%97%B6%E9%97%B4%E6%88%B3%E7%9A%84Series%E5%90%88%E5%B9%B6%E4%B8%BA%E5%8D%95%E4%B8%AADataFrame/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">时间序列教程之arima</div>
+        <div class="article-nav-title">pandas将多列带时间戳的Series合并为单个DataFrame</div>
       </a>
     
   </nav>

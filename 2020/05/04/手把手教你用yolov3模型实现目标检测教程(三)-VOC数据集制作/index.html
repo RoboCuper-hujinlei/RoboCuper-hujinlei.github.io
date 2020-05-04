@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-Hans">
+
+
+<head>
+  <meta charset="utf-8" />
+   
+  <meta name="keywords" content="c/c++, python, CV, deeplearning, music, hujinlei&#39;s life" />
+   
+  <meta name="description" content="Hi~ Welcome to Jinlei&#39;s Blog" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    手把手教你用yolov3模型实现目标检测(三)-VOC数据集制作 |  Jinlei&#39;s Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Jinlei's Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content on">
+      <section class="outer">
+  <article id="post-手把手教你用yolov3模型实现目标检测教程(三)-VOC数据集制作" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  手把手教你用yolov3模型实现目标检测(三)-VOC数据集制作
+</h1>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/05/04/%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E7%94%A8yolov3%E6%A8%A1%E5%9E%8B%E5%AE%9E%E7%8E%B0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%95%99%E7%A8%8B(%E4%B8%89)-VOC%E6%95%B0%E6%8D%AE%E9%9B%86%E5%88%B6%E4%BD%9C/" class="article-date">
+  <time datetime="2020-05-04T10:42:25.000Z" itemprop="datePublished">2020-05-04</time>
+</a>
+      
+      
+      
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">1.3k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">6 min</span>
+        </span>
+    </span>
+</div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <p>﻿网上关于数据标注的文章已有很多，大多数都会有一些细节问题，比如怎样爬取网上的原始图片数据，如何批量重命名？数据集怎样划分为训练集，测试集，验证集？？？标注的数据放置的目录结构不对导致训练报错的问题等等，而这些问题，在本篇文章中都考虑到了，所以只要你按照步骤一步步来，并且使用本文中的代码，将会避免遇到上面所说的问题：</p>
+<p>我们已经知道，物体检测，简言之就是框出图像中的目标物体，并给出框的位置和置信度，就像下图这样:<br><img src="https://img-blog.csdnimg.cn/2019112820291923.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0h1X2hlbGxvd29ybGQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>置信度在终端输出了：<br><img src="https://img-blog.csdnimg.cn/20191128202948303.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0h1X2hlbGxvd29ybGQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h3 id="1、标注工具labelImg"><a href="#1、标注工具labelImg" class="headerlink" title="1、标注工具labelImg"></a>1、标注工具labelImg</h3><p>是的，当然要用强大的labelImg，貌似记得直接可以pip install labelImg，还是查一下如何安装吧，很简单的<br>界面长这个样子：<br><img src="https://img-blog.csdnimg.cn/20191128203519408.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0h1X2hlbGxvd29ybGQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>下面我们<strong>标注PascalVOC数据集：</strong><br>首先下载VOC2007格式的原始数据集：<br><a href="http://pjreddie.com/media/files/VOCtrainval_06-Nov-2007.tar" target="_blank" rel="noopener">http://pjreddie.com/media/files/VOCtrainval_06-Nov-2007.tar</a><br><a href="http://pjreddie.com/media/files/VOCtest_06-Nov-2007.tar" target="_blank" rel="noopener">http://pjreddie.com/media/files/VOCtest_06-Nov-2007.tar</a><br>下载完成后，目录应该是这样式儿的：<br><img src="https://img-blog.csdnimg.cn/20191128204038263.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0h1X2hlbGxvd29ybGQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>如果不需要其中的图片，直接删除，只保留空的目录结构。</p>
+<p>其中，Annotations存放标注后的标签文件(.xml)<br>ImageSets存放你的训练集、测试集、验证集等的配置文件（文件中存放图片路径）<br>JPEGImages存放原始图片数据<br>SegmentationClass<br>SegmentationObject我们不使用<br>labelImg标注工具选择 打开目录-&gt;打开ImageSets目录，选择改变存放目录，存放xml到Annotations目录</p>
+<p>labelImg使用简单<strong>快捷键</strong>：<br>A / D键，左右选择图片，W：开始标注，ctrl+s保存。<br><strong>标注需遵守的基本规则：</strong><br><img src="https://img-blog.csdnimg.cn/20200109120155362.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0h1X2hlbGxvd29ybGQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>—————————————-分割线—————————————–<br>那知道怎么标注后，如何获取我们想要的图片数据：<br>请移步：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://blog.csdn.net/Hu_helloworld/article/details/103044737</span><br></pre></td></tr></table></figure>
+
+<p>网上爬虫等下载到图片后，如何批量重命名？<br>一个小脚本：<br>食用时，请修改self.path重命名图片的路径，我会专门mkdir一个rename目录，免得出错。<br>而且重点是，VOC数据集格式是规定这样的：占6位数，所以必要是要修改dst那行的几个’000’,你一试就行<br><img src="https://img-blog.csdnimg.cn/2019112820524229.png" alt="在这里插入图片描述"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">class ImageRename():</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.path = <span class="string">'/home/hujinlei/dev/YOLOv3-dev/darknet/scripts/VOCdevkit/VOC2007/rename'</span></span><br><span class="line"></span><br><span class="line">    def rename(self):</span><br><span class="line">        filelist = os.listdir(self.path)</span><br><span class="line">        total_num = len(filelist)</span><br><span class="line"></span><br><span class="line">        i = 2548</span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> filelist:</span><br><span class="line">            <span class="keyword">if</span> item.endswith(<span class="string">'.jpg'</span>):</span><br><span class="line">                src = os.path.join(os.path.abspath(self.path), item)</span><br><span class="line">                dst = os.path.join(os.path.abspath(self.path), <span class="string">'000'</span> + format(str(i), <span class="string">'0&gt;3s'</span>) + <span class="string">'.jpg'</span>)</span><br><span class="line">                os.rename(src, dst)</span><br><span class="line">                <span class="built_in">print</span> (<span class="string">'converting %s to %s ...'</span>%(src, dst))</span><br><span class="line">                i = i + 1</span><br><span class="line">        <span class="built_in">print</span> (<span class="string">'total %d to rename &amp; converted %d jpgs'</span> % (total_num, i))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    newname = ImageRename()</span><br><span class="line">    newname.rename()</span><br></pre></td></tr></table></figure>
+
+<p>都标注好，重命名ok以后。<br>在VOC2007目录下，也就是这个目录下：<br><img src="https://img-blog.csdnimg.cn/20191128205523268.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0h1X2hlbGxvd29ybGQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>以下脚本可以给整个数据集划分为：训练集、测试集、验证集.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">""</span><span class="string">"</span></span><br><span class="line"><span class="string">将voc_2007格式的数据集划分下训练集、测试集和验证集</span></span><br><span class="line"><span class="string">"</span><span class="string">""</span></span><br><span class="line">import os</span><br><span class="line">import random</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">trainval_percent = 0.96</span><br><span class="line">train_percent = 0.9</span><br><span class="line">xmlfilepath = <span class="string">'Annotations'</span></span><br><span class="line">txtsavepath = <span class="string">'ImageSets/Main'</span></span><br><span class="line">total_xml = os.listdir(xmlfilepath)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">num=len(total_xml)</span><br><span class="line">list=range(num)</span><br><span class="line">tv=int(num*trainval_percent)</span><br><span class="line">tr=int(tv*train_percent)</span><br><span class="line">trainval= random.sample(list,tv)</span><br><span class="line">train=random.sample(trainval,tr)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ftrainval = open(<span class="string">'ImageSets/Main/trainval.txt'</span>, <span class="string">'w'</span>, encoding=<span class="string">"utf-8"</span>)</span><br><span class="line">ftest = open(<span class="string">'ImageSets/Main/test.txt'</span>, <span class="string">'w'</span>, encoding=<span class="string">"utf-8"</span>)</span><br><span class="line">ftrain = open(<span class="string">'ImageSets/Main/train.txt'</span>, <span class="string">'w'</span>, encoding=<span class="string">"utf-8"</span>)</span><br><span class="line">fval = open(<span class="string">'ImageSets/Main/val.txt'</span>, <span class="string">'w'</span>, encoding=<span class="string">"utf-8"</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i  <span class="keyword">in</span> list:</span><br><span class="line">    name=total_xml[i][:-4]+<span class="string">'\n'</span></span><br><span class="line">    <span class="keyword">if</span> i <span class="keyword">in</span> trainval:</span><br><span class="line">        ftrainval.write(name)</span><br><span class="line">        <span class="keyword">if</span> i <span class="keyword">in</span> train:</span><br><span class="line">            ftrain.write(name)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            fval.write(name)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        ftest.write(name)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ftrainval.close()</span><br><span class="line">ftrain.close()</span><br><span class="line">fval.close()</span><br><span class="line">ftest .close()</span><br></pre></td></tr></table></figure>
+
+<p>会在目录下，生成ImageSets/Main/<br><img src="https://img-blog.csdnimg.cn/20191128205739103.png" alt="在这里插入图片描述"><br>最后，在工程项目的/scripts目录下，修改voc_label.py文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">import xml.etree.ElementTree as ET</span><br><span class="line">import pickle</span><br><span class="line">import os</span><br><span class="line">from os import listdir, getcwd</span><br><span class="line">from os.path import join</span><br><span class="line"><span class="comment">#将下面的sets和classes改为自己对应的</span></span><br><span class="line"><span class="comment">#sets=[('2012', 'train'), ('2012', 'val'), ('2007', 'train'), ('2007', 'val'), ('2007', 'test')]</span></span><br><span class="line"><span class="comment">#classes = ["aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat", "chair", "cow", "diningtable", "dog", "horse", "motorbike", "person", "pottedplant", "sheep", "sofa", "train", "tvmonitor"]</span></span><br><span class="line"></span><br><span class="line">sets=[(<span class="string">'2007'</span>, <span class="string">'train'</span>), (<span class="string">'2007'</span>, <span class="string">'val'</span>), (<span class="string">'2007'</span>, <span class="string">'test'</span>)]</span><br><span class="line">classes = [<span class="string">"Fire extinguisher"</span>,<span class="string">"Fire extinguisher box"</span>,<span class="string">"Fire hydrant"</span>,<span class="string">"trolley"</span>,<span class="string">"ladder"</span>]</span><br><span class="line"></span><br><span class="line">def convert(size, box):</span><br><span class="line">    dw = 1./(size[0])</span><br><span class="line">    dh = 1./(size[1])</span><br><span class="line">    x = (box[0] + box[1])/2.0 - 1</span><br><span class="line">    y = (box[2] + box[3])/2.0 - 1</span><br><span class="line">    w = box[1] - box[0]</span><br><span class="line">    h = box[3] - box[2]</span><br><span class="line">    x = x*dw</span><br><span class="line">    w = w*dw</span><br><span class="line">    y = y*dh</span><br><span class="line">    h = h*dh</span><br><span class="line">    <span class="built_in">return</span> (x,y,w,h)</span><br><span class="line"></span><br><span class="line">def convert_annotation(year, image_id):</span><br><span class="line">    in_file = open(<span class="string">'VOCdevkit/VOC%s/Annotations/%s.xml'</span>%(year, image_id))</span><br><span class="line">    out_file = open(<span class="string">'VOCdevkit/VOC%s/labels/%s.txt'</span>%(year, image_id), <span class="string">'w'</span>)</span><br><span class="line">    tree=ET.parse(in_file)</span><br><span class="line">    root = tree.getroot()</span><br><span class="line">    size = root.find(<span class="string">'size'</span>)</span><br><span class="line">    w = int(size.find(<span class="string">'width'</span>).text)</span><br><span class="line">    h = int(size.find(<span class="string">'height'</span>).text)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> obj <span class="keyword">in</span> root.iter(<span class="string">'object'</span>):</span><br><span class="line">        difficult = obj.find(<span class="string">'difficult'</span>).text</span><br><span class="line">        cls = obj.find(<span class="string">'name'</span>).text</span><br><span class="line">        <span class="keyword">if</span> cls not <span class="keyword">in</span> classes or int(difficult)==1:</span><br><span class="line">            <span class="built_in">continue</span></span><br><span class="line">        cls_id = classes.index(cls)</span><br><span class="line">        xmlbox = obj.find(<span class="string">'bndbox'</span>)</span><br><span class="line">        b = (<span class="built_in">float</span>(xmlbox.find(<span class="string">'xmin'</span>).text), <span class="built_in">float</span>(xmlbox.find(<span class="string">'xmax'</span>).text), <span class="built_in">float</span>(xmlbox.find(<span class="string">'ymin'</span>).text), <span class="built_in">float</span>(xmlbox.find(<span class="string">'ymax'</span>).text))</span><br><span class="line">        bb = convert((w,h), b)</span><br><span class="line">        out_file.write(str(cls_id) + <span class="string">" "</span> + <span class="string">" "</span>.join([str(a) <span class="keyword">for</span> a <span class="keyword">in</span> bb]) + <span class="string">'\n'</span>)</span><br><span class="line"></span><br><span class="line">wd = getcwd()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> year, image_set <span class="keyword">in</span> sets:</span><br><span class="line">    <span class="keyword">if</span> not os.path.exists(<span class="string">'VOCdevkit/VOC%s/labels/'</span>%(year)):</span><br><span class="line">        os.makedirs(<span class="string">'VOCdevkit/VOC%s/labels/'</span>%(year))</span><br><span class="line">    image_ids = open(<span class="string">'VOCdevkit/VOC%s/ImageSets/Main/%s.txt'</span>%(year, image_set)).<span class="built_in">read</span>().strip().split()</span><br><span class="line">    list_file = open(<span class="string">'%s_%s.txt'</span>%(year, image_set), <span class="string">'w'</span>)</span><br><span class="line">    <span class="keyword">for</span> image_id <span class="keyword">in</span> image_ids:</span><br><span class="line">        list_file.write(<span class="string">'%s/VOCdevkit/VOC%s/JPEGImages/%s.jpg\n'</span>%(wd, year, image_id))</span><br><span class="line">        convert_annotation(year, image_id)</span><br><span class="line">    list_file.close()</span><br><span class="line"></span><br><span class="line">os.system(<span class="string">"cat 2007_train.txt 2007_val.txt &gt; train.txt"</span>)</span><br><span class="line">os.system(<span class="string">"cat 2007_train.txt 2007_val.txt 2007_test.txt &gt; train.all.txt"</span>)</span><br></pre></td></tr></table></figure>
+
+<p>运行此脚本，会在当前目录，产生以下文件：<br><img src="https://img-blog.csdnimg.cn/20191128210041486.png" alt="在这里插入图片描述"><br>其中，2007_test.txt测试集<br>    2007_train.txt训练集<br>    2007_val.txt验证集<br>    我们使用2007_test.txt和train.txt就可以。</p>
+<p>=============================================================<br>日后在更</p>
+
+      
+      <!-- reward -->
+      
+      <div id="reward-btn">
+        Donate
+      </div>
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+        <div class="declare">
+          <ul class="post-copyright">
+            <li>
+              <i class="ri-copyright-line"></i>
+              <strong>Copyright： </strong>
+              Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+            </li>
+          </ul>
+        </div>
+        
+    <footer class="article-footer">
+      
+          
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/05/04/%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E7%94%A8yolov3%E6%A8%A1%E5%9E%8B%E5%AE%9E%E7%8E%B0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%95%99%E7%A8%8B(%E4%B8%89)-VOC%E6%95%B0%E6%8D%AE%E9%9B%86%E5%88%B6%E4%BD%9C/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/yolov3%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/" rel="tag">yolov3目标检测</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+    
+      <a href="/2020/05/04/%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E7%94%A8yolov3%E6%A8%A1%E5%9E%8B%E5%AE%9E%E7%8E%B0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%95%99%E7%A8%8B(%E4%BA%8C)-%E6%A0%B7%E6%9C%AC%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">手把手教你用yolov3模型实现目标检测教程(二)-样本数据获取</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+<!-- valine评论 -->
+<div id="vcomments-box">
+    <div id="vcomments">
+    </div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        app_id: '',
+        app_key: '',
+        path: window.location.pathname,
+        notify: 'false',
+        verify: 'false',
+        avatar: 'monsterid',
+        placeholder: '友善评论的人运气都不会太差~',
+        recordIP: true
+    });
+    const infoEle = document.querySelector('#vcomments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+        infoEle.childNodes.forEach(function (item) {
+            item.parentNode.removeChild(item);
+        });
+    }
+</script>
+<style>
+    #vcomments-box {
+        padding: 5px 30px;
+    }
+
+    @media screen and (max-width: 800px) {
+        #vcomments-box {
+            padding: 5px 0px;
+        }
+    }
+
+    #vcomments-box #vcomments {
+        background-color: #fff;
+    }
+
+    .v .vlist .vcard .vh {
+        padding-right: 20px;
+    }
+
+    .v .vlist .vcard {
+        padding-left: 10px;
+    }
+</style>
+
+  
+
+  
+  
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2020
+        <i class="ri-heart-fill heart_icon"></i> Hu Jinlei
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></s>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="Jinlei&#39;s Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags/%E6%97%85%E8%A1%8C/">旅行</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="http://shenyu-vip.lofter.com" target="_blank" rel="noopener">摄影</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about_me">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.png">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Subtitle -->
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['You&#39;re never wrong to do the right thing', '', ''],
+      startDelay: 0,
+      typeSpeed: 100,
+      loop: true,
+      backSpeed: 80,
+      showCursor: false
+    });
+  } catch (err) {
+    console.log(err)
+  }
+</script>
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto'
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+<!-- ClickLove -->
+
+
+<script src="/js/clickLove.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+
+    
+  </div>
+</body>
+
+</html>
