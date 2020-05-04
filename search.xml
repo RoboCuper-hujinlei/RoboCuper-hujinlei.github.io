@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>时间序列教程之Prophet</title>
+    <url>/2020/05/04/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E6%95%99%E7%A8%8B%E4%B9%8BProphet/</url>
+    <content><![CDATA[<p>hi~ 这里是时间序列预测模型(二) 之 Prophet</p>
+]]></content>
+      <tags>
+        <tag>时间序列预测</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>时间序列教程之arima</title>
     <url>/2020/05/04/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E6%95%99%E7%A8%8B%E4%B9%8Barima/</url>
     <content><![CDATA[<p>﻿最近接触时间序列较多，在借鉴很多人的知识之后，特此总结一下。目前关于时间序列数据分析预测大致有三种主流方法：<br><strong>1、ARIMA系列方法<br>2、facebook开源的Prophet模型<br>3、LSTM时间序列预测</strong></p>
@@ -42,15 +51,6 @@
       <categories>
         <category>时间序列</category>
       </categories>
-      <tags>
-        <tag>时间序列预测</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>时间序列教程之Prophet</title>
-    <url>/2020/05/04/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E6%95%99%E7%A8%8B%E4%B9%8BProphet/</url>
-    <content><![CDATA[<p>hi~ 这里是时间序列预测模型(二) 之 Prophet</p>
-]]></content>
       <tags>
         <tag>时间序列预测</tag>
       </tags>
