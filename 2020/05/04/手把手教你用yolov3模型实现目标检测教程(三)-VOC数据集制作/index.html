@@ -87,7 +87,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">6 min</span>
+            <span class="post-count">5 min</span>
         </span>
     </span>
 </div>
@@ -117,7 +117,7 @@
 <p>我们已经知道，物体检测，简言之就是框出图像中的目标物体，并给出框的位置和置信度，就像下图这样:<br><img src="https://img-blog.csdnimg.cn/2019112820291923.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0h1X2hlbGxvd29ybGQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>置信度在终端输出了：<br><img src="https://img-blog.csdnimg.cn/20191128202948303.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0h1X2hlbGxvd29ybGQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <h3 id="1、标注工具labelImg"><a href="#1、标注工具labelImg" class="headerlink" title="1、标注工具labelImg"></a>1、标注工具labelImg</h3><p>是的，当然要用强大的labelImg，貌似记得直接可以pip install labelImg，还是查一下如何安装吧，很简单的<br>界面长这个样子：<br><img src="https://img-blog.csdnimg.cn/20191128203519408.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0h1X2hlbGxvd29ybGQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>下面我们<strong>标注PascalVOC数据集：</strong><br>首先下载VOC2007格式的原始数据集：<br><a href="http://pjreddie.com/media/files/VOCtrainval_06-Nov-2007.tar" target="_blank" rel="noopener">http://pjreddie.com/media/files/VOCtrainval_06-Nov-2007.tar</a><br><a href="http://pjreddie.com/media/files/VOCtest_06-Nov-2007.tar" target="_blank" rel="noopener">http://pjreddie.com/media/files/VOCtest_06-Nov-2007.tar</a><br>下载完成后，目录应该是这样式儿的：<br><img src="https://img-blog.csdnimg.cn/20191128204038263.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0h1X2hlbGxvd29ybGQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>如果不需要其中的图片，直接删除，只保留空的目录结构。</p>
 <p>其中，Annotations存放标注后的标签文件(.xml)<br>ImageSets存放你的训练集、测试集、验证集等的配置文件（文件中存放图片路径）<br>JPEGImages存放原始图片数据<br>SegmentationClass<br>SegmentationObject我们不使用<br>labelImg标注工具选择 打开目录-&gt;打开ImageSets目录，选择改变存放目录，存放xml到Annotations目录</p>
-<p>labelImg使用简单<strong>快捷键</strong>：<br>A / D键，左右选择图片，W：开始标注，ctrl+s保存。<br><strong>标注需遵守的基本规则：</strong><br><img src="https://img-blog.csdnimg.cn/20200109120155362.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0h1X2hlbGxvd29ybGQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>—————————————-分割线—————————————–<br>那知道怎么标注后，如何获取我们想要的图片数据：<br>请移步：</p>
+<p>labelImg使用简单<strong>快捷键</strong>：<br>A / D键，左右选择图片，W：开始标注，ctrl+s保存。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://blog.csdn.net/Hu_helloworld/article/details/103044737</span><br></pre></td></tr></table></figure>
 
 <p>网上爬虫等下载到图片后，如何批量重命名？<br>一个小脚本：<br>食用时，请修改self.path重命名图片的路径，我会专门mkdir一个rename目录，免得出错。<br>而且重点是，VOC数据集格式是规定这样的：占6位数，所以必要是要修改dst那行的几个’000’,你一试就行<br><img src="https://img-blog.csdnimg.cn/2019112820524229.png" alt="在这里插入图片描述"></p>

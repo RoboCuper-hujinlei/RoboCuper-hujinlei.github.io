@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-05-04T10:49:22.844Z</updated>
+  <updated>2020-05-04T15:34:29.887Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://yoursite.com/2020/05/04/%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E7%94%A8yolov3%E6%A8%A1%E5%9E%8B%E5%AE%9E%E7%8E%B0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%95%99%E7%A8%8B(%E4%B8%89)-VOC%E6%95%B0%E6%8D%AE%E9%9B%86%E5%88%B6%E4%BD%9C/"/>
     <id>http://yoursite.com/2020/05/04/%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E7%94%A8yolov3%E6%A8%A1%E5%9E%8B%E5%AE%9E%E7%8E%B0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%95%99%E7%A8%8B(%E4%B8%89)-VOC%E6%95%B0%E6%8D%AE%E9%9B%86%E5%88%B6%E4%BD%9C/</id>
     <published>2020-05-04T10:42:25.000Z</published>
-    <updated>2020-05-04T10:49:22.844Z</updated>
+    <updated>2020-05-04T15:34:29.887Z</updated>
     
     <summary type="html">
     
@@ -134,7 +134,7 @@
     <link href="http://yoursite.com/2020/05/04/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E6%95%99%E7%A8%8B%E4%B9%8Barima/"/>
     <id>http://yoursite.com/2020/05/04/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E6%95%99%E7%A8%8B%E4%B9%8Barima/</id>
     <published>2020-05-04T09:32:23.000Z</published>
-    <updated>2020-05-04T10:47:32.465Z</updated>
+    <updated>2020-05-04T15:32:07.091Z</updated>
     
     <summary type="html">
     
@@ -142,8 +142,7 @@
       
         
         
-          &lt;p&gt;﻿最近接触时间序列较多，在借鉴很多人的知识之后，特此总结一下。目前关于时间序列数据分析预测大致有三种主流方法：&lt;br&gt;&lt;strong&gt;1、ARIMA系列方法&lt;br&gt;2、facebook开源的Prophet模型&lt;br&gt;3、LSTM时间序列预测&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;
+          &lt;p&gt;﻿最近接触时间序列较多，在借鉴很多人的知识之后，特此总结一下。目前关于时间序列数据分析预测大致有三种主流方法：&lt;br&gt;&lt;strong&gt;①  ARIMA系列方法&lt;/strong&gt;&lt;br&gt;&lt;strong&gt;② 
         
       
     
