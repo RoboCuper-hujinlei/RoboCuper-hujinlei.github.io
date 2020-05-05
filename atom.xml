@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-05-04T15:34:29.887Z</updated>
+  <updated>2020-05-05T10:54:07.564Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,60 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>tesseract4.1标注自己的样本训练ocr识别库</title>
+    <link href="http://yoursite.com/2020/05/05/tesseract4-1%E6%A0%87%E6%B3%A8%E8%87%AA%E5%B7%B1%E7%9A%84%E6%A0%B7%E6%9C%AC%E8%AE%AD%E7%BB%83ocr%E8%AF%86%E5%88%AB%E5%BA%93/"/>
+    <id>http://yoursite.com/2020/05/05/tesseract4-1%E6%A0%87%E6%B3%A8%E8%87%AA%E5%B7%B1%E7%9A%84%E6%A0%B7%E6%9C%AC%E8%AE%AD%E7%BB%83ocr%E8%AF%86%E5%88%AB%E5%BA%93/</id>
+    <published>2020-05-05T10:53:01.000Z</published>
+    <updated>2020-05-05T10:54:07.564Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;﻿转载自：&lt;br&gt;原文链接：&lt;a href=&quot;https://blog.csdn.net/whatday/article/details/38493551&quot; target=&quot;_blank&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="tesseract-ocr" scheme="http://yoursite.com/categories/tesseract-ocr/"/>
+    
+    
+      <category term="tesseract-ocr" scheme="http://yoursite.com/tags/tesseract-ocr/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Tesseract-OCR 4.1 LSTM训练流程</title>
+    <link href="http://yoursite.com/2020/05/05/Tesseract-OCR%204.1%20LSTM%E8%AE%AD%E7%BB%83%E6%B5%81%E7%A8%8B/"/>
+    <id>http://yoursite.com/2020/05/05/Tesseract-OCR%204.1%20LSTM%E8%AE%AD%E7%BB%83%E6%B5%81%E7%A8%8B/</id>
+    <published>2020-05-05T10:49:19.000Z</published>
+    <updated>2020-05-05T10:51:26.517Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;﻿曾参考此处-&amp;gt;：&lt;a href=&quot;https://blog.csdn.net/qq_30110069/article/details/98742701&quot; target=&quot;_blank&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="tesseract-ocr" scheme="http://yoursite.com/categories/tesseract-ocr/"/>
+    
+    
+      <category term="tesseract-ocr" scheme="http://yoursite.com/tags/tesseract-ocr/"/>
+    
+  </entry>
   
   <entry>
     <title>手把手教你用yolov3模型实现目标检测(三)-VOC数据集制作</title>
